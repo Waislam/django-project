@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content%}
+		<nav aria-label="breadcrumb">
+		  <ol class="breadcrumb">
+		    <li class="breadcrumb-item" ><a href="{% url 'boards:home' %}">Boards</a></li>
+		    <li class="breadcrumb-item" ><a href="{% url 'boards:topic' topic.board.id %}">{{topic.board.name}}</a></li>
+		    <li class="breadcrumb-item" ><a href="{% url 'boards:topic_post' topic.board.pk topic.pk %}">{{topic.subject}}</a></li>
+		    <li class="breadcrumb-item active" >Reply a Post</li>
+		  </ol>
+		</nav>
+
+	<form method="post" novalidate>
+	    {% csrf_token %}
+	    	{% include 'includes/form.html' %}
+	    <button type="submit" class="btn btn-success">Post</button>
+  	</form>
+	{% for post in topic.posts.all %}
+	<div class="card mb-2 ">
+	  	<div class="col-6">
+			<strong class="text-muted">{{post.created_by.username}} </strong>
+		</div>
+		<div class="col-6 text-right">
+			<small class="text-muted">{{post.created_at}}</small>
+		</div>
+		
+		{{post.message}}
+	</div>
+	{% endfor %}
+{% endblock content%}

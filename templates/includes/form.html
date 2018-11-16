@@ -1,0 +1,21 @@
+{% load widget_tweaks %}		
+
+
+		{% for i in form %}
+	    	{{i.label_tag}}
+	    	{% if i.errors %}
+	    		{% render_field i class=" form-control is-invalid" %}
+	    		{% for error in i.errors %}
+	    		<div class="invalid-feedback">
+	    			{{error}}
+	    		</div>
+	    		{% endfor %}
+	    	{% else %}
+	    		{% render_field i class="form-control is-valid "%}	
+	    	{% endif %}
+	    	{% if i.help_text %}
+		      <small class="form-text text-muted">
+		        {{ i.help_text|safe }}  <!-- new code here -->
+		      </small>
+		    {% endif %}
+	    {% endfor %}
